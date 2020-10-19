@@ -1,0 +1,58 @@
+{
+  "networks":  {
+    "2": {
+      "address": "0:ca2fc59493ec4f486bbabeb8bcef6d203f3d190a32aed48659b59a81bf625bd1"
+    }
+  },
+  "abi": {
+    "ABI version": 2,
+    "header": [
+      "time"
+    ],
+    "functions": [
+      {
+        "name": "constructor",
+        "inputs": [
+        ],
+        "outputs": [
+        ]
+      },
+      {
+        "name": "addMessage",
+        "inputs": [
+          {
+            "name": "message",
+            "type": "bytes"
+          }
+        ],
+        "outputs": [
+        ]
+      },
+      {
+        "name": "getMessages",
+        "inputs": [
+        ],
+        "outputs": [
+          {
+            "components": [
+              {
+                "name": "balance",
+                "type": "uint256"
+              },
+              {
+                "name": "message",
+                "type": "bytes"
+              }
+            ],
+            "name": "value0",
+            "type": "map(uint256,tuple)"
+          }
+        ]
+      }
+    ],
+    "data": [
+    ],
+    "events": [
+    ]
+  }
+}
