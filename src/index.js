@@ -1,5 +1,5 @@
-import freeton from "../freeton_dev/src/index";
-import ContractFactory from "../freeton_dev/src/contract/ContractFactory";
+// import freeton from "../freeton_dev/src/index";
+import freeton from "freeton";
 
 const Kington = require('../contracts/Kington.json');
 const KingtonOrder = require('../contracts/KingtonOrder.json');
@@ -32,7 +32,7 @@ window.app = {
     const provider = _.getProvider();
     const signer = provider.getSigner();
     const options = {initAmount: '1000022000', initParams: {}};
-    const contractFactory = new ContractFactory(KingtonOrder.abi, KingtonOrder.imageBase64, signer, options);
+    const contractFactory = new freeton.ContractFactory(KingtonOrder.abi, KingtonOrder.imageBase64, signer, options);
     const constructorParams = {
       destinationAddress: Kington.networks['2'].address,
       message: freeton.utils.stringToHex('London is the capital of Great Britain.'),
