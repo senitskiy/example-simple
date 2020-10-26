@@ -16,31 +16,49 @@ const _ = {
 };
 
 window.app = {
-  requestNetwork() {
-    _.checkExtensionAvailability();
-    const provider = _.getProvider();
-    provider.getNetwork().then((network) => console.log(network));
+  async requestNetwork() {
+    const button = document.getElementById('buttonRequestNetwork');
+    button.disabled = true;
+    try {
+      _.checkExtensionAvailability();
+      const provider = _.getProvider();
+      const network = await provider.getNetwork();
+      console.log(network);
+    } finally {
+      button.disabled = false;
+    }
   },
-  getMessages() {
-    _.checkExtensionAvailability();
-    const provider = _.getProvider();
-    const contract = new freeton.Contract(Kington.networks['2'].address, Kington.abi, provider);
-    contract.functions.getMessages().then((messages) => console.log(messages));
+  async getMessages() {
+    const button = document.getElementById('buttonGetMessages');
+    button.disabled = true;
+    try {
+      _.checkExtensionAvailability();
+      const provider = _.getProvider();
+      const contract = new freeton.Contract(Kington.networks['2'].address, Kington.abi, provider);
+      const messages = await contract.functions.getMessages();
+      console.log(messages);
+    } finally {
+      button.disabled = false;
+    }
   },
   async deploy() {
-    _.checkExtensionAvailability();
-    const provider = _.getProvider();
-    const signer = provider.getSigner();
-    const options = {initAmount: '1000022000', initParams: {}};
-    const contractFactory = new freeton.ContractFactory(KingtonOrder.abi, KingtonOrder.imageBase64, signer, options);
-    const constructorParams = {
-      destinationAddress: Kington.networks['2'].address,
-      message: freeton.utils.stringToHex('London is the capital of Great Britain.'),
-    };
-    const contract = await contractFactory.deploy(constructorParams);
-    contract
-      .getDeployProcessing()
-      .wait()
-      .then(() => console.log(`Deployed. TxId: ${contract.getDeployProcessing().txid}`));
+    const button = document.getElementById('buttonDeploy');
+    button.disabled = true;
+    try {
+      _.checkExtensionAvailability();
+      const provider = _.getProvider();
+      const signer = provider.getSigner();
+      const options = {initAmount: '1000022000', initParams: {}};
+      const contractFactory = new freeton.ContractFactory(KingtonOrder.abi, KingtonOrder.imageBase64, signer, options);
+      const constructorParams = {
+        destinationAddress: Kington.networks['2'].address,
+        message: freeton.utils.stringToHex('London is the capital of Great Britain.'),
+      };
+      const contract = await contractFactory.deploy(constructorParams);
+      await contract.getDeployProcessing().wait();
+      console.log(`Deployed. TxId: ${contract.getDeployProcessing().txid}`)
+    } finally {
+      button.disabled = false;
+    }
   }
 };
