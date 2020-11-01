@@ -16,6 +16,18 @@ const _ = {
 };
 
 window.app = {
+  async requestVersion() {
+    const button = document.getElementById('buttonRequestVersion');
+    button.disabled = true;
+    try {
+      _.checkExtensionAvailability();
+      const provider = _.getProvider();
+      const version = await provider.getVersion();
+      console.log(version);
+    } finally {
+      button.disabled = false;
+    }
+  },
   async requestNetwork() {
     const button = document.getElementById('buttonRequestNetwork');
     button.disabled = true;
@@ -34,8 +46,8 @@ window.app = {
     try {
       _.checkExtensionAvailability();
       const provider = _.getProvider();
-      const contract = new freeton.Contract(Kington.networks['2'].address, Kington.abi, provider);
-      const messages = await contract.functions.getMessages();
+      const contract = new freeton.Contract(provider, Kington.abi, Kington.networks['2'].address);
+      const messages = await contract.functions.getMessages.runGet();
       console.log(messages);
     } finally {
       button.disabled = false;
@@ -48,13 +60,13 @@ window.app = {
       _.checkExtensionAvailability();
       const provider = _.getProvider();
       const signer = provider.getSigner();
-      const options = {initAmount: '1000022000', initParams: {}};
-      const contractFactory = new freeton.ContractFactory(KingtonOrder.abi, KingtonOrder.imageBase64, signer, options);
+      const contractBuilder = new freeton.ContractBuilder(signer, KingtonOrder.abi, KingtonOrder.imageBase64);
+      contractBuilder.setInitialAmount('1000022000');
       const constructorParams = {
         destinationAddress: Kington.networks['2'].address,
         message: freeton.utils.stringToHex('London is the capital of Great Britain.'),
       };
-      const contract = await contractFactory.deploy(constructorParams);
+      const contract = await contractBuilder.deploy(constructorParams);
       await contract.getDeployProcessing().wait();
       console.log(`Deployed. TxId: ${contract.getDeployProcessing().txid}`)
     } finally {
