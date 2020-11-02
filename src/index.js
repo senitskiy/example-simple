@@ -3,7 +3,7 @@ import freeton from "freeton";
 
 const Kington = require('../contracts/Kington.json');
 const KingtonOrder = require('../contracts/KingtonOrder.json');
-const SetcodeMultisigWallet = require('../contracts/SetcodeMultisigWallet.json');
+// const SetcodeMultisigWallet = require('../contracts/SetcodeMultisigWallet.json');
 
 const _ = {
   checkExtensionAvailability() {
