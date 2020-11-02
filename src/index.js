@@ -3,6 +3,7 @@ import freeton from "freeton";
 
 const Kington = require('../contracts/Kington.json');
 const KingtonOrder = require('../contracts/KingtonOrder.json');
+const SetcodeMultisigWallet = require('../contracts/SetcodeMultisigWallet.json');
 
 const _ = {
   checkExtensionAvailability() {
@@ -72,5 +73,26 @@ window.app = {
     } finally {
       button.disabled = false;
     }
-  }
+  },
+  // async run() {
+  //   const button = document.getElementById('buttonRun');
+  //   button.disabled = true;
+  //   try {
+  //     _.checkExtensionAvailability();
+  //     const provider = _.getProvider();
+  //     const signer = provider.getSigner();
+  //     const contract = new freeton.Contract(signer, SetcodeMultisigWallet.abi, '0:1ec56ec6f6e510f2e3843663d3e400ceda743a1ad2dcadbd347b0234338795db');
+  //     const input = {
+  //       dest: '0:11684118bc3062a07126191bf17a650dbb101aff809eb79a9c64b061f4b9b97b',
+  //       value: '500000000',
+  //       bounce: false,
+  //       allBalance: false,
+  //       payload: '',
+  //     };
+  //     const result = await contract.functions.submitTransaction.run(input);
+  //     console.log(result);
+  //   } finally {
+  //     button.disabled = false;
+  //   }
+  // }
 };
