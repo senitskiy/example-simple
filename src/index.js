@@ -60,7 +60,7 @@ window.app = {
     try {
       _.checkExtensionAvailability();
       const provider = _.getProvider();
-      const signer = provider.getSigner();
+      const signer = await provider.getSigner();
       const contractBuilder = new freeton.ContractBuilder(signer, KingtonOrder.abi, KingtonOrder.imageBase64);
       contractBuilder.setInitialAmount('1000022000');
       const constructorParams = {
@@ -74,13 +74,30 @@ window.app = {
       button.disabled = false;
     }
   },
+  async transfer() {//Transfer tokens to surf with message "Hello".
+    const button = document.getElementById('buttonTransfer');
+    button.disabled = true;
+    try {
+      _.checkExtensionAvailability();
+      const provider = _.getProvider();
+      const signer = await provider.getSigner();
+      const wallet = signer.getWallet();
+      const address = '0:b1c6ca063c050c4923580d3461c46c978651c4f100955e8ba32d40b278907206';
+      const amount = '1000000000';
+      const payload = 'te6ccgEBAgEADgABCAAAAAABAApIZWxsbw==';
+      const transactionId = await wallet.transfer(address, amount, true, payload);
+      console.log(`Transferred. TxId: ${transactionId}`)
+    } finally {
+      button.disabled = false;
+    }
+  }
   // async run() {
   //   const button = document.getElementById('buttonRun');
   //   button.disabled = true;
   //   try {
   //     _.checkExtensionAvailability();
   //     const provider = _.getProvider();
-  //     const signer = provider.getSigner();
+  //     const signer = await provider.getSigner();
   //     const contract = new freeton.Contract(signer, SetcodeMultisigWallet.abi, '0:1ec56ec6f6e510f2e3843663d3e400ceda743a1ad2dcadbd347b0234338795db');
   //     const input = {
   //       dest: '0:11684118bc3062a07126191bf17a650dbb101aff809eb79a9c64b061f4b9b97b',
