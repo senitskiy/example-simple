@@ -85,8 +85,9 @@ window.app = {
       const address = '0:b1c6ca063c050c4923580d3461c46c978651c4f100955e8ba32d40b278907206';
       const amount = '1000000000';
       const payload = 'te6ccgEBAgEADgABCAAAAAABAApIZWxsbw==';
-      const transactionId = await wallet.transfer(address, amount, true, payload);
-      console.log(`Transferred. TxId: ${transactionId}`)
+      const contractMessageProcessing = await wallet.transfer(address, amount, true, payload);
+      await contractMessageProcessing.wait();
+      console.log(`Transferred. TxId: ${contractMessageProcessing.txid}`)
     } finally {
       button.disabled = false;
     }
