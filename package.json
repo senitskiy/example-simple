@@ -16,6 +16,10 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "freeton": "^0.4.0"
+    "@tonclient/core": "^1.8.0",
+    "@tonclient/lib-node": "^1.8.0",
+    "ascii-hex": "^1.0.1",
+    "freeton": "^0.4.0",
+    "hex2ascii": "^0.0.3"
   }
 }
