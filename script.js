@@ -4,6 +4,8 @@ const {libNode} = require("@tonclient/lib-node");
 const fs = require('fs');
 const hex2ascii = require('hex2ascii')
 
+let currentContract = process.argv[2]||'0:6ec91ce8f9f14f4d757003c9e673b7cda605774ca64128d8f4667169430165e5';
+
 // const storage =  require('./client999999/client999999.Contract.js');    //require('./TestStorageContract.js'); //specify the path to the .js file
 // const storagePath = './client999999/client999999Contract.json'; //'./TestStorageContract.json';
 
@@ -32,15 +34,23 @@ async function main(client) {
 
         let resultQC = await client.net.query_collection({
           collection: 'accounts',
-          filter: { id: { eq: storageAddress } },
+          filter: { id: { eq: currentContract } },
           result: 'boc'
         });
 
         const  paramsOfEncodeMessage = {
           abi: abi,
-          address: storageAddress,
+          address: currentContract, // storageAddress,
           call_set: {
-            function_name: 'getName',
+            function_name: 'getName',  //getBalance getRootAddress allowance 
+
+            // ./tonos-cli run <wallet_address> getName {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> getSymbol {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> getDecimals {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> getBalance {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> getWalletKey {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> getRootAddress {} --abi TONTokenWallet.abi
+            // ./tonos-cli run <wallet_address> allowance {} --abi TONTokenWallet.abi            
             input: {}
 
             // input: {
